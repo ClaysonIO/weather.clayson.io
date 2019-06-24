@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Greenhouse Stats</title>
+
+    <script src="/cdn-cgi/apps/head/r4QrBNdy4Z1be8lH2mWfilCB4-U.js"></script><style type="text/css">
+    .info{
+        display: flex;
+        padding: 10px;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+        font-family: Arial;
+        align-items: center;
+    }
+</style>
+</head>
+
+<body style="text-align: center">
+<h2>Greenhouse Stats</h2>
+
+<div>
+    <h4>Temperature:</h4>
+    <div id="tempContainer" class="info">
+        <div style="flex: auto">
+            <span id="temp">---</span>&nbsp;&#8457
+        </div>
+    </div>
+</div>
+<div>
+    <h4>Humidity:</h4>
+    <span id="humidityContainer" class="info">
+        <div style="flex: auto">
+            <span id="humidity">---</span>&nbsp;%
+        </div>
+    </span>
+</div>
+<div>
+    <h4>Last Reading:</h4>
+    <span id="lastContainer" class="info">
+        <div style="flex: auto">
+            <span id="last">---</span>
+        </div>
+    </span>
+</div>
+
+<!--<img id="gradient" src="colorGradient.jpg">-->
+</body>
+
+<script type="application/javascript" src="js/luxon.min.js"></script>
+<script type="application/javascript">
+    function getTemps(){
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener("load", function(){
+            var div = document.getElementById("");
+            var response = JSON.parse(this.response);
+            var farenheit = ((response.centigrade * (9/5)) + 32);
+            var humidity = response.humidity;
+            var last = luxon.DateTime.fromISO(response.last);
+
+            document.getElementById("temp").innerHTML = farenheit.toFixed(1);
+            document.getElementById("humidity").innerHTML = humidity.toFixed(1);
+            document.getElementById("last").innerHTML = last.toLocaleString(luxon.DateTime.DATETIME_MED);
+
+            document.getElementById("tempContainer").style.backgroundColor = farenheit > 75 || farenheit < 62 ? 'red' : 'green';
+            document.getElementById("humidityContainer").style.backgroundColor = humidity > 45 ? 'red' : 'green';
+            document.getElementById("lastContainer").style.backgroundColor = luxon.DateTime.local().minus({'minutes': 15}) > last ? 'red' : 'green';
+            // document.getElementById("Downstairs").setAttribute("fill", getTempColor(parseFloat(this.responseText)));
+            console.log(response)
+        });
+        oReq.open("GET", "https://dabblefox-temp.builtwithdark.com/dht22?source=dhtgreenhouse11252018");
+        oReq.send();
+    }
+
+    getTemps();
+    window.setInterval(function(){getTemps()}, 60000);
+</script>
+</html>
