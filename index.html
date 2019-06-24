@@ -1,14 +1,13 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Greenhouse Stats</title>
 
-    <script src="/cdn-cgi/apps/head/r4QrBNdy4Z1be8lH2mWfilCB4-U.js"></script><style type="text/css">
+    <script src="/cdn-cgi/apps/head/r4QrBNdy4Z1be8lH2mWfilCB4-U.js"></script>
+    <style type="text/css">
     .info{
         display: flex;
         padding: 10px;
@@ -28,7 +27,7 @@
     <h4>Temperature:</h4>
     <div id="tempContainer" class="info">
         <div style="flex: auto">
-            <span id="temp">---</span>&nbsp;&#8457
+            <span id="temp">---</span>
         </div>
     </div>
 </div>
@@ -36,7 +35,7 @@
     <h4>Humidity:</h4>
     <span id="humidityContainer" class="info">
         <div style="flex: auto">
-            <span id="humidity">---</span>&nbsp;%
+            <span id="humidity">---</span>
         </div>
     </span>
 </div>
@@ -57,7 +56,6 @@
     function getTemps(){
         var oReq = new XMLHttpRequest();
         oReq.addEventListener("load", function(){
-            var div = document.getElementById("");
             var response = JSON.parse(this.response);
             var farenheit = ((response.centigrade * (9/5)) + 32);
             var humidity = response.humidity;
