@@ -8,13 +8,13 @@
 
     <script src="/cdn-cgi/apps/head/r4QrBNdy4Z1be8lH2mWfilCB4-U.js"></script>
     <style type="text/css">
-    .info{
+    .info{   //front end page display//
         display: flex;
         padding: 10px;
         color: white;
         text-align: center;
         font-weight: bold;
-        font-family: Arial;
+        font-family: Comic Sans; 
         align-items: center;
     }
 </style>
@@ -28,7 +28,7 @@
     <div id="tempContainer" class="info">
         <div style="flex: auto">
             <span id="temp">---</span>
-        </div>
+        </div>  //space between lines on the front end//
     </div>
 </div>
 <div>
@@ -57,7 +57,7 @@
         var oReq = new XMLHttpRequest();
         oReq.addEventListener("load", function(){
             var response = JSON.parse(this.response);
-            var farenheit = ((response.centigrade * (9/5)) + 32);
+            var farenheit = ((response.centigrade * (9/5)) + 32);  //formula to convert temp read in centigrade to farenheight//
             var humidity = response.humidity;
             var last = luxon.DateTime.fromISO(response.last);
 
@@ -65,7 +65,7 @@
             document.getElementById("humidity").innerHTML = humidity.toFixed(1);
             document.getElementById("last").innerHTML = last.toLocaleString(luxon.DateTime.DATETIME_MED);
 
-            document.getElementById("tempContainer").style.backgroundColor = farenheit > 75 || farenheit < 62 ? 'red' : 'green';
+            document.getElementById("tempContainer").style.backgroundColor = farenheit > 75 || farenheit < 62 ? 'red' : 'green';//safe and unsafe temp zones//
             document.getElementById("humidityContainer").style.backgroundColor = humidity > 45 ? 'red' : 'green';
             document.getElementById("lastContainer").style.backgroundColor = luxon.DateTime.local().minus({'minutes': 15}) > last ? 'red' : 'green';
             // document.getElementById("Downstairs").setAttribute("fill", getTempColor(parseFloat(this.responseText)));
