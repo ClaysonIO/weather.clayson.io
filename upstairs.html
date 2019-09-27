@@ -47,6 +47,10 @@
     </span>
 </div>
 
+<div id="history" style="width: 300px; margin: auto;">
+    <h4>History</h4>
+</div>
+
 <!--<img id="gradient" src="colorGradient.jpg">-->
 </body>
 
@@ -72,6 +76,33 @@
         });
         oReq.open("GET", "https://dabblefox-temp.builtwithdark.com/dht22?source=28-0218311f42ff");
         oReq.send();
+
+        fetch("https://dabblefox-temp.builtwithdark.com/history?source=28-0218311f42ff&count=16")
+          .then(response=>{
+            response.json()
+              .then(history=>{
+                history.forEach(item=>{
+                  const element = document.createElement("div");
+                  element.style = "text-align: left; padding: 5px; border-bottom: solid #ccc 1px; display: flex;";
+
+                  var farenheit = ((item.centigrade * (9/5)) + 32).toFixed(1);  //formula to convert temp read in centigrade to farenheight//
+                  const date = luxon.DateTime.fromISO(item.date);
+                  // element.innerText = `${farenheit}  --  ${date.toLocaleString(luxon.DateTime.TIME_SIMPLE)}`;
+
+                  const temp = document.createElement("div");
+                  temp.style = "flex: 1";
+                  temp.innerText = farenheit;
+
+                  const time = document.createElement("div");
+                  time.innerText = date.toLocaleString(luxon.DateTime.TIME_SIMPLE)
+
+                  element.appendChild(temp);
+                  element.appendChild(time);
+
+                  document.getElementById('history').appendChild(element);
+                })
+              })
+          })
     }
 
     getTemps();
