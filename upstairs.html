@@ -38,14 +38,14 @@
         </div>  <!-- space between lines on the front end-->
     </div>
 </div>
-<div>
-    <h4>Humidity:</h4>
-    <span id="humidityContainer" class="info">
-        <div style="flex: auto">
-            <span id="humidity">---</span>
-        </div>
-    </span>
-</div>
+<!--<div>-->
+    <!--<h4>Humidity:</h4>-->
+    <!--<span id="humidityContainer" class="info">-->
+        <!--<div style="flex: auto">-->
+            <!--<span id="humidity">-&#45;&#45;</span>-->
+        <!--</div>-->
+    <!--</span>-->
+<!--</div>-->
 <div>
     <h4>Last Reading:</h4>
     <span id="lastContainer" class="info">
@@ -73,15 +73,15 @@
         oReq.addEventListener("load", function(){
             var response = JSON.parse(this.response);
             var farenheit = ((response.centigrade * (9/5)) + 32);  //formula to convert temp read in centigrade to farenheight//
-            var humidity = response.humidity;
+            // var humidity = response.humidity;
             var last = luxon.DateTime.fromISO(response.date);
 
             document.getElementById("temp").innerHTML = farenheit.toFixed(1);
-            document.getElementById("humidity").innerHTML = humidity.toFixed(1);
+            // document.getElementById("humidity").innerHTML = humidity.toFixed(1);
             document.getElementById("last").innerHTML = last.toLocaleString(luxon.DateTime.DATETIME_MED);
 
             document.getElementById("tempContainer").style.backgroundColor = farenheit > 75 || farenheit < 62 ? 'red' : 'green';//safe and unsafe temp zones//
-            document.getElementById("humidityContainer").style.backgroundColor = humidity > 45 ? 'red' : 'green';
+            // document.getElementById("humidityContainer").style.backgroundColor = humidity > 45 ? 'red' : 'green';
             document.getElementById("lastContainer").style.backgroundColor = luxon.DateTime.local().minus({'minutes': 15}) > last ? 'red' : 'green';
             // document.getElementById("Downstairs").setAttribute("fill", getTempColor(parseFloat(this.responseText)));
             console.log(response)
