@@ -17,8 +17,13 @@
         align-items: center;
     }
 </style>
+
+    <link rel="shortcut icon" href="images/thermometer.png">
+
     <script src="./js/d3.min.js"></script>
     <link rel="stylesheet" href="./css/c3.min.css"/>
+    <link rel="stylesheet" href="./css/loading.css"/>
+
     <script src="./js/c3.min.js"></script>
 </head>
 
@@ -52,7 +57,9 @@
 
 <div style="margin: auto;">
     <h4>History</h4>
-    <div id="chart"></div>
+    <div id="chart">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
     <div id="history"></div>
 </div>
 
@@ -86,7 +93,7 @@
           .then(response=>{
             response.json()
               .then(history=>{
-                document.getElementById('history').innerText = "";
+                // document.getElementById('history').innerText = "";
                 const columnData = ['Temperature'];
                 const xAxis = [];
                 history.forEach(item=>{
