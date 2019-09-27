@@ -94,7 +94,7 @@
             response.json()
               .then(history=>{
                 // document.getElementById('history').innerText = "";
-                const columnData = ['Temperature'];
+                const columnData = [];
                 const xAxis = [];
                 history.forEach(item=>{
 
@@ -130,7 +130,7 @@
                     xFormat: '%Y-%m-%d %H:%M',
                     columns: [
                       ['x'].concat(xAxis.reverse()),
-                      columnData
+                      ['Temperature'].concat(columnData.reverse())
                     ],
                     types: {
                       Temperature: 'spline'
