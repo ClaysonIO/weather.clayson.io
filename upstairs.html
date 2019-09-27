@@ -47,8 +47,9 @@
     </span>
 </div>
 
-<div id="history" style="width: 300px; margin: auto;">
+<div style="width: 300px; margin: auto;">
     <h4>History</h4>
+    <div id="history"></div>
 </div>
 
 <!--<img id="gradient" src="colorGradient.jpg">-->
@@ -81,6 +82,7 @@
           .then(response=>{
             response.json()
               .then(history=>{
+                document.getElementById('history').innerText = "";
                 history.forEach(item=>{
                   const element = document.createElement("div");
                   element.style = "text-align: left; padding: 5px; border-bottom: solid #ccc 1px; display: flex;";
