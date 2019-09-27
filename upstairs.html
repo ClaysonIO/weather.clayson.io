@@ -89,35 +89,36 @@
         oReq.open("GET", "https://dabblefox-temp.builtwithdark.com/dht22?source=28-0218311f42ff");
         oReq.send();
 
-        fetch("https://dabblefox-temp.builtwithdark.com/history?source=28-0218311f42ff&count=120")
+        fetch("https://dabblefox-temp.builtwithdark.com/history?source=28-0218311f42ff&count=216")
           .then(response=>{
             response.json()
-              .then(history=>{
+              .then((history)=>{
                 // document.getElementById('history').innerText = "";
                 const columnData = [];
                 const xAxis = [];
-                history.forEach(item=>{
+                history.forEach((item, index)=>{
 
-                  const farenheit = ((item.centigrade * (9/5)) + 32).toFixed(2);  //formula to convert temp read in centigrade to farenheight//
+                  const farenheit = ((item.centigrade * (9/5)) + 32);  //formula to convert temp read in centigrade to farenheight//
                   const date = luxon.DateTime.fromISO(item.date);
-                  // element.innerText = `${farenheit}  --  ${date.toLocaleString(luxon.DateTime.TIME_SIMPLE)}`;
 
-                  // const element = document.createElement("div");
-                  // element.style = "text-align: left; padding: 5px; border-bottom: solid #ccc 1px; display: flex;";
-                  //
-                  // const temp = document.createElement("div");
-                  // temp.style = "flex: 1";
-                  // temp.innerText = farenheit;
-                  //
-                  // const time = document.createElement("div");
-                  // time.innerText = date.toLocaleString(luxon.DateTime.TIME_SIMPLE);
-                  //
-                  // element.appendChild(temp);
-                  // element.appendChild(time);
-                  //
-                  // document.getElementById('history').appendChild(element);
+                  if(index < 12){
+                      const element = document.createElement("div");
+                      element.style = "text-align: left; padding: 5px; border-bottom: solid #ccc 1px; display: flex;";
 
-                  columnData.push(parseFloat(farenheit));
+                      const temp = document.createElement("div");
+                      temp.style = "flex: 1";
+                      temp.innerText = farenheit.toFixed(1);
+
+                      const time = document.createElement("div");
+                      time.innerText = date.toLocaleString(luxon.DateTime.TIME_SIMPLE);
+
+                      element.appendChild(temp);
+                      element.appendChild(time);
+
+                      document.getElementById('history').appendChild(element);
+                  }
+
+                  columnData.push(farenheit);
                   xAxis.push(date.toFormat('yyyy-LL-dd HH:mm'))
                 })
 
@@ -135,6 +136,12 @@
                     types: {
                       Temperature: 'spline'
                     }
+                  },
+                  point: {
+                    show: false
+                  },
+                  zoom:{
+                    enabled: true
                   },
                   axis: {
                     x: {
